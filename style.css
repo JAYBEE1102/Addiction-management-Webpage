@@ -1,0 +1,371 @@
+:root {
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --page-bg: #ececf7;
+    --card-bg: #ffffff;
+    --text-heading: #0a0a12;
+    --text-body: #828294;
+    --text-label: #11111a;
+    --primary-purple: #4f39f6;
+    --primary-hover: #432de0;
+    --border-light: #dddde8;
+    --pill-bg: #e5e5f0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-sans);
+}
+
+html, body {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden; /* Ensures no scrolling */
+}
+
+body {
+    background-color: var(--page-bg);
+    color: var(--text-heading);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    -webkit-font-smoothing: antialiased;
+}
+
+.page-container {
+    width: 100%;
+    max-width: 960px;
+    height: 100%;
+    max-height: 560px; /* Perfectly fits viewport height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-card {
+    background: var(--card-bg);
+    border-radius: 28px;
+    box-shadow: 0 20px 40px rgba(15, 15, 35, 0.08);
+    display: flex;
+    padding: 14px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Left Gradient Panel */
+.artwork-panel {
+    flex: 1;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #1b36e8 0%, #632bd9 40%, #c3b1fa 75%, #88dbfc 100%);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 32px 32px 36px 32px;
+}
+
+.brand-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.spark-icon {
+    width: 22px;
+    height: 22px;
+}
+
+.spark-white {
+    color: #ffffff;
+}
+
+.spark-violet {
+    color: var(--primary-purple);
+    width: 24px;
+    height: 24px;
+    margin-bottom: 12px;
+}
+
+.brand-name {
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 19px;
+    letter-spacing: 0.5px;
+}
+
+.artwork-bottom {
+    max-width: 320px;
+}
+
+.artwork-subtitle {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.artwork-heading {
+    color: #ffffff;
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: -0.4px;
+}
+
+/* Right Form Panel */
+.form-panel {
+    flex: 1.05;
+    padding: 24px 36px 20px 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.form-header h2 {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text-heading);
+    letter-spacing: -0.6px;
+    margin-bottom: 6px;
+}
+
+.form-header p {
+    font-size: 13px;
+    color: var(--text-body);
+    line-height: 1.45;
+    margin-bottom: 20px;
+    max-width: 360px;
+}
+
+/* Form Controls */
+.input-field {
+    margin-bottom: 14px;
+}
+
+.input-field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-label);
+    margin-bottom: 6px;
+}
+
+.input-field input {
+    width: 100%;
+    height: 44px;
+    padding: 0 14px;
+    background: #ffffff;
+    border: 1.2px solid var(--border-light);
+    border-radius: 10px;
+    font-size: 14px;
+    color: var(--text-heading);
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.input-field input::placeholder {
+    color: #9999aa;
+}
+
+.input-field input:focus {
+    border-color: var(--primary-purple);
+    box-shadow: 0 0 0 3.5px rgba(79, 57, 246, 0.12);
+}
+
+.password-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-box input {
+    padding-right: 44px;
+}
+
+.eye-btn {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #888899;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    transition: color 0.2s ease;
+}
+
+.eye-btn:hover {
+    color: var(--text-heading);
+}
+
+.eye-svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* Primary Button */
+.primary-btn {
+    width: 100%;
+    height: 46px;
+    background: var(--primary-purple);
+    border: none;
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 14.5px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 4px;
+    box-shadow: 0 8px 18px rgba(79, 57, 246, 0.35);
+    transition: all 0.2s ease;
+}
+
+.primary-btn:hover {
+    background: var(--primary-hover);
+    box-shadow: 0 10px 22px rgba(79, 57, 246, 0.45);
+}
+
+.primary-btn:active {
+    transform: scale(0.99);
+}
+
+/* Divider */
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 16px 0 14px 0;
+}
+
+.divider .line {
+    flex: 1;
+    height: 1px;
+    background-color: var(--border-light);
+}
+
+.divider span {
+    color: #9999aa;
+    font-size: 11.5px;
+    font-weight: 500;
+}
+
+/* Social Pills */
+.social-pills {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.pill-btn {
+    flex: 1;
+    height: 36px;
+    background: var(--pill-bg);
+    border: none;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.pill-btn:hover {
+    background: #dddde8;
+}
+
+.be-logo {
+    font-weight: 700;
+    font-size: 13.5px;
+    color: #11111a;
+}
+
+/* Footer Toggle */
+.auth-footer {
+    text-align: center;
+    font-size: 13px;
+    color: #888899;
+}
+
+.auth-footer button {
+    background: none;
+    border: none;
+    color: var(--primary-purple);
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 4px;
+    font-size: 13px;
+}
+
+.auth-footer button:hover {
+    text-decoration: underline;
+}
+
+/* Toast */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #11111a;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 1000;
+}
+
+.toast.hidden {
+    opacity: 0;
+    transform: translate(-50%, 15px);
+    pointer-events: none;
+}
+
+/* Mobile & Small Screen Breakpoint Handling */
+@media (max-height: 620px) {
+    .page-container {
+        max-height: 96vh;
+    }
+    .form-header h2 {
+        font-size: 24px;
+    }
+    .form-header p {
+        margin-bottom: 12px;
+    }
+    .input-field {
+        margin-bottom: 10px;
+    }
+    .divider {
+        margin: 12px 0 10px 0;
+    }
+    .social-pills {
+        margin-bottom: 12px;
+    }
+}
+
+@media (max-width: 860px) {
+    html, body {
+        overflow-y: auto; /* Allow touch scrolling on small mobile devices if screen height is very low */
+    }
+    .page-container {
+        max-height: none;
+        height: auto;
+    }
+    .auth-card {
+        flex-direction: column;
+        height: auto;
+    }
+    .artwork-panel {
+        min-height: 200px;
+    }
+    .form-panel {
+        padding: 24px 16px 16px 16px;
+    }
+}

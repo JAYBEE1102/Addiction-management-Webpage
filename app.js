@@ -476,6 +476,8 @@ function loginUserSession(userProfile) {
 
     // Subscribe to standard real-time user-specific collections
     initRealTimeListeners();
+    renderFaqList();
+    renderVideosGrid();
     showToast('Logged into JAYFOUND Recovery Workspace.');
 }
 
@@ -485,6 +487,9 @@ function logout() {
         if (journalUnsubscribe) journalUnsubscribe();
         if (postsUnsubscribe) postsUnsubscribe();
         if (ticketsUnsubscribe) ticketsUnsubscribe();
+        if (adminTicketsUnsubscribe) adminTicketsUnsubscribe();
+        if (adminUsersUnsubscribe) adminUsersUnsubscribe();
+        if (adminReportsUnsubscribe) adminReportsUnsubscribe();
         
         dashboardSection.classList.add('hidden');
         authSection.classList.remove('hidden');
@@ -891,7 +896,7 @@ function renderAdminAbuseReports(snapshot) {
                 </select>
             </td>
             <td style="padding:8px; text-align:right;">
-                <button class="resolve-btn" style="background:#dc2626; color:white; border:none; padding:4px 8px; border-radius:6px; cursor:pointer;" onclick="toggleUserSuspension('${r.reportedUid}', false)">
+                <button class="block-btn resolve-btn" style="background:#dc2626; color:white; border:none; padding:4px 8px; border-radius:6px; cursor:pointer;" data-id="${doc.id}" data-uid="${r.reportedUid}">
                     Block Target
                 </button>
             </td>
@@ -1177,4 +1182,21 @@ function selectTag(btn) {
     document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
     selectedEmotionTag = btn.textContent;
+}
+
+// Event Delegation for dynamically generated abuse reports block buttons
+const reportsListContainer = document.getElementById('admin-reports-list');
+if (reportsListContainer) {
+    reportsListContainer.addEventListener('click', (e) => {
+        const blockBtn = e.target.closest('.block-btn');
+        if (blockBtn) {
+            const reportId = blockBtn.getAttribute('data-id');
+            const reportedUid = blockBtn.getAttribute('data-uid');
+            
+            // Suspend the reported user
+            toggleUserSuspension(reportedUid, false);
+            // Mark the report as actioned
+            updateReportStatus(reportId, 'actioned');
+        }
+    });
 }

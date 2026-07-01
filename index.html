@@ -770,68 +770,7 @@
         </div>
     </div>
 
-    <!-- Google Account Select Modal -->
-    <div id="google-auth-modal" class="modal-overlay hidden">
-        <div class="modal-card">
-            <div class="modal-header">
-                <h3>Select Google Account</h3>
-                <button class="modal-close" onclick="closeGoogleAuthModal()">&times;</button>
-            </div>
-            <p class="modal-sub">Choose a verified Google profile to continue to JAYFOUND</p>
-            <div class="counselor-options">
-                <button class="counselor-opt-btn" onclick="selectGoogleAccount('farazhaidet786@gmail.com')">
-                    <span class="opt-icon">👤</span>
-                    <div>
-                        <strong>Faraz Haidet</strong>
-                        <span>farazhaidet786@gmail.com</span>
-                    </div>
-                </button>
-                <button class="counselor-opt-btn" onclick="selectGoogleAccount('johndoe.recovery@gmail.com')">
-                    <span class="opt-icon">👤</span>
-                    <div>
-                        <strong>John Doe</strong>
-                        <span>johndoe.recovery@gmail.com</span>
-                    </div>
-                </button>
-                <button class="counselor-opt-btn" onclick="triggerCustomGoogleEmail()">
-                    <span class="opt-icon">➕</span>
-                    <div>
-                        <strong>Use another account</strong>
-                        <span>Register with a different Google account</span>
-                    </div>
-                </button>
-            </div>
-            <div id="custom-google-input-group" class="input-field hidden" style="margin-top:16px;">
-                <label for="custom-google-email">Enter Google Email</label>
-                <div class="password-box">
-                    <input type="email" id="custom-google-email" placeholder="example@gmail.com">
-                    <button class="primary-btn compact-btn" onclick="submitCustomGoogleEmail()" style="margin-left:8px; height:44px;">Select</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Facebook Login Credentials Modal -->
-    <div id="facebook-auth-modal" class="modal-overlay hidden">
-        <div class="modal-card">
-            <div class="modal-header">
-                <h3>Log in with Facebook</h3>
-                <button class="modal-close" onclick="closeFacebookAuthModal()">&times;</button>
-            </div>
-            <p class="modal-sub">Access JAYFOUND using your Facebook account</p>
-            <form onsubmit="handleFacebookSubmit(event)">
-                <div class="input-field">
-                    <label for="fb-identity">Email or Mobile Number</label>
-                    <input type="text" id="fb-identity" placeholder="Facebook username/email" required>
-                </div>
-                <div class="input-field">
-                    <label for="fb-pass">Password</label>
-                    <input type="password" id="fb-pass" placeholder="Facebook password" required>
-                </div>
-                <button type="submit" class="primary-btn" style="background:#1877F2; box-shadow:0 8px 18px rgba(24,119,242,0.3)">Log In</button>
-            </form>
-        </div>
-    </div>
 
     <!-- Floating AI Support Assistant Widget -->
     <div id="ai-chat-btn" class="ai-floating-trigger" onclick="toggleAiWidget()">
@@ -895,7 +834,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
-
+    <script src="firebase-config.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

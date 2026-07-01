@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="JAYFOUND - Access your personal hub for clarity and recovery.">
-    <title>JAYFOUND | Authentication</title>
+    <meta name="description" content="JAYFOUND - Professional Recovery & Wellness Workspace. Securely access your personal dashboard.">
+    <title>JAYFOUND | Secure Portal</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="page-container">
+    <!-- Authentication View -->
+    <div id="auth-section" class="page-container">
         <div class="auth-card">
-            <!-- Left Gradient Artwork Panel -->
+            <!-- Left Gradient Panel -->
             <div class="artwork-panel">
                 <div class="artwork-top">
                     <div class="brand-badge">
@@ -26,31 +27,33 @@
                 </div>
                 
                 <div class="artwork-bottom">
-                    <p class="artwork-subtitle">You can easily</p>
-                    <h1 class="artwork-heading">Get access your personal hub for clarity and recovery</h1>
+                    <p class="artwork-subtitle">SaaS Wellness Platform</p>
+                    <h1 class="artwork-heading">A safe space for mental clarity and habit tracking</h1>
                 </div>
             </div>
 
             <!-- Right Form Panel -->
             <div class="form-panel">
                 <div class="form-header">
-                    <svg class="spark-icon spark-violet" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2V22M2 12H22M4.929 4.929L19.071 19.071M19.071 4.929L4.929 19.071" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
-                    </svg>
                     <h2 id="form-title">Create an account</h2>
-                    <p id="form-subtitle">Access your recovery tracker, daily journal, and support network anytime, anywhere - and keep everything flowing in one place.</p>
+                    <p id="form-subtitle">Join JAYFOUND to access your daily wellness workspace.</p>
                 </div>
 
+                <!-- Live Error Messaging Box -->
+                <div id="auth-error-box" class="error-box hidden"></div>
+
+                <!-- Main Email/Password Form -->
                 <form id="auth-form" onsubmit="handleFormSubmit(event)">
                     <div class="input-field">
-                        <label for="email">Your email</label>
-                        <input type="email" id="email" value="farazhaidet786@gmail.com" placeholder="farazhaidet786@gmail.com" required>
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" placeholder="name@example.com" required>
+                        <span class="validation-error" id="val-err-email"></span>
                     </div>
 
                     <div class="input-field">
                         <label for="password">Password</label>
                         <div class="password-box">
-                            <input type="password" id="password" value="123456789012" placeholder="••••••••••••" required>
+                            <input type="password" id="password" placeholder="••••••••" required>
                             <button type="button" class="eye-btn" id="eye-btn" aria-label="Toggle password visibility">
                                 <svg class="eye-svg" id="eye-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
@@ -58,6 +61,7 @@
                                 </svg>
                             </button>
                         </div>
+                        <span class="validation-error" id="val-err-password"></span>
                     </div>
 
                     <button type="submit" class="primary-btn" id="submit-btn">Get Started</button>
@@ -70,10 +74,14 @@
                 </div>
 
                 <div class="social-pills">
-                    <button class="pill-btn" type="button" title="Behance">
-                        <span class="be-logo">Bē</span>
+                    <!-- Phone verification button -->
+                    <button class="pill-btn" type="button" title="Phone Verification" onclick="openPhoneAuthModal()">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                        </svg>
                     </button>
-                    <button class="pill-btn" type="button" title="Google">
+                    <!-- Google -->
+                    <button class="pill-btn" type="button" title="Google Integration" onclick="handleGoogleSignIn()">
                         <svg viewBox="0 0 24 24" width="16" height="16">
                             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                             <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -81,14 +89,15 @@
                             <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
                         </svg>
                     </button>
-                    <button class="pill-btn" type="button" title="Facebook">
+                    <!-- Facebook -->
+                    <button class="pill-btn" type="button" title="Facebook Integration" onclick="handleFacebookSignIn()">
                         <svg viewBox="0 0 24 24" width="16" height="16" fill="#1877F2">
                             <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                         </svg>
                     </button>
                 </div>
 
-                <div class="auth-footer">
+                <div class="auth-toggle">
                     <span id="toggle-text">Don't have an account?</span>
                     <button type="button" id="toggle-btn" onclick="toggleAuthMode()">Sign up</button>
                 </div>
@@ -96,7 +105,796 @@
         </div>
     </div>
 
+    <!-- Main Application Dashboard View -->
+    <div id="dashboard-section" class="dashboard-wrapper hidden">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <svg class="spark-icon spark-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2V22M2 12H22M4.929 4.929L19.071 19.071M19.071 4.929L4.929 19.071" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+                </svg>
+                <span class="brand-name">JAYFOUND</span>
+            </div>
+
+            <nav class="nav-menu">
+                <button class="nav-item active" data-tab="overview" onclick="switchTab('overview')">
+                    <span class="nav-icon">📊</span><span class="nav-label">Overview</span>
+                </button>
+                <button class="nav-item" data-tab="journal" onclick="switchTab('journal')">
+                    <span class="nav-icon">📖</span><span class="nav-label">Daily Journal</span>
+                </button>
+                <button class="nav-item" data-tab="peersupport" onclick="switchTab('peersupport')">
+                    <span class="nav-icon">🤝</span><span class="nav-label">Peer Support</span>
+                </button>
+                <button class="nav-item" data-tab="resources" onclick="switchTab('resources')">
+                    <span class="nav-icon">🆘</span><span class="nav-label">Resources & Help</span>
+                </button>
+                <button class="nav-item" data-tab="profile" onclick="switchTab('profile')">
+                    <span class="nav-icon">⚙️</span><span class="nav-label">Profile & Settings</span>
+                </button>
+                <button class="nav-item admin-nav-btn" data-tab="admin" onclick="switchTab('admin')">
+                    <span class="nav-icon">🛡️</span><span class="nav-label">Admin Portal</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-counselor-box">
+                <button class="talk-someone-btn" onclick="openConfidentialSupportModal()">
+                    <span>📝</span> Request Support Form
+                </button>
+            </div>
+
+            <div class="sidebar-user">
+                <div class="user-avatar" id="sidebar-avatar">F</div>
+                <div class="user-info">
+                    <span class="user-name" id="user-display-email">Faraz H.</span>
+                    <span class="user-role" id="user-display-role">Day 30 Recovery</span>
+                </div>
+                <button class="logout-btn" onclick="logout()" title="Log Out">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content View Container -->
+        <main class="dashboard-content">
+            <!-- Top Header Bar -->
+            <header class="content-header">
+                <div class="header-titles">
+                    <h1 id="page-greeting">Welcome back, Faraz 👋</h1>
+                    <p class="header-sub">Every day is a milestone. Stay focused on your journey.</p>
+                </div>
+                <div class="header-actions">
+                    <button class="emergency-panic-btn" onclick="openEmergencyModal()">
+                        <span class="pulse-dot-red"></span><span>🚨 Need Immediate Help?</span>
+                    </button>
+                    <button class="counselor-header-btn" onclick="openConfidentialSupportModal()">
+                        <span>📝</span> Request Support Form
+                    </button>
+                </div>
+            </header>
+
+            <!-- Dynamic Motivational Banner -->
+            <div class="motivation-banner" id="motivation-banner">
+                <div class="motivation-icon">🌟</div>
+                <div class="motivation-text">
+                    <h3 id="motiv-title">Faraz, 30 days is an extraordinary milestone!</h3>
+                    <p id="motiv-desc">Take pride in how far you've come. Your strength and courage are inspiring for your journey ahead.</p>
+                </div>
+            </div>
+
+            <!-- Tab 1: Overview -->
+            <section id="tab-overview" class="tab-pane active">
+                <div class="grid-layout">
+                    <!-- Progress Ring Card -->
+                    <div class="dash-card progress-ring-card">
+                        <div class="card-header-flex">
+                            <div>
+                                <span class="streak-badge">MILESTONE TRACKER 🔥</span>
+                                <h2>Your Recovery Milestone</h2>
+                            </div>
+                            <span class="ring-percentage" id="dash-streak-pct">100%</span>
+                        </div>
+
+                        <div class="ring-visual-wrapper">
+                            <div class="svg-ring-container">
+                                <svg class="progress-ring" width="140" height="140">
+                                    <circle class="progress-ring-bg" stroke="#e2e8f0" stroke-width="12" fill="transparent" r="58" cx="70" cy="70"/>
+                                    <circle class="progress-ring-fill" stroke="url(#gradientRing)" stroke-width="12" stroke-linecap="round" fill="transparent" r="58" cx="70" cy="70" stroke-dasharray="364.4" stroke-dashoffset="0"/>
+                                    <defs>
+                                        <linearGradient id="gradientRing" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#4f39f6" />
+                                            <stop offset="100%" stop-color="#38bdf8" />
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                                <div class="ring-center-text">
+                                    <span class="ring-num" id="dash-streak-num">30</span>
+                                    <span class="ring-label">Clean Days</span>
+                                </div>
+                            </div>
+                            <div class="milestone-metrics">
+                                <div class="metric-box">
+                                    <span class="metric-val" id="dash-money-saved">$450</span>
+                                    <span class="metric-lbl">Money Saved</span>
+                                </div>
+                                <div class="metric-box">
+                                    <span class="metric-val">120 hrs</span>
+                                    <span class="metric-lbl">Clarity Gained</span>
+                                </div>
+                                <div class="metric-box">
+                                    <span class="metric-val">Target: 60</span>
+                                    <span class="metric-lbl">Next Goal</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="holistic-progress">
+                            <div class="prog-bar-item">
+                                <div class="prog-bar-label"><span>Mind Clarity</span><span>92%</span></div>
+                                <div class="prog-track"><div class="prog-fill" style="width: 92%;"></div></div>
+                            </div>
+                            <div class="prog-bar-item">
+                                <div class="prog-bar-label"><span>Physical Energy</span><span>85%</span></div>
+                                <div class="prog-track"><div class="prog-fill alt" style="width: 85%;"></div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- "Your Next Step Today" Section -->
+                    <div class="dash-card next-step-card">
+                        <div class="next-step-header">
+                            <span class="next-icon">🌱</span>
+                            <div>
+                                <h3>Your Next Step Today</h3>
+                                <p class="card-subtitle">Simple daily steps for your recovery journey.</p>
+                            </div>
+                        </div>
+                        <div class="task-list">
+                            <div class="task-item" onclick="completeTask(this)">
+                                <div class="task-circle">1</div>
+                                <div class="task-details">
+                                    <span class="task-title">Complete your daily Mood Check-in 😊</span>
+                                    <span class="task-sub">Keep track of your emotional patterns to build resilience.</span>
+                                </div>
+                            </div>
+                            <div class="task-item" onclick="completeTask(this)">
+                                <div class="task-circle">2</div>
+                                <div class="task-details">
+                                    <span class="task-title">Practice 3 Deep Breathing Cycles 🧘‍♂️</span>
+                                    <span class="task-sub">Calm your nervous system and increase mental clarity.</span>
+                                </div>
+                            </div>
+                            <div class="task-item" onclick="completeTask(this)">
+                                <div class="task-circle">3</div>
+                                <div class="task-details">
+                                    <span class="task-title">Drink a Glass of Hydrating Water 💧</span>
+                                    <span class="task-sub">Nourish your physical body during its natural recovery process.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mood Tracker Widget -->
+                    <div class="dash-card mood-card">
+                        <h3>Daily Mood Check-in</h3>
+                        <p class="card-subtitle">How are you feeling right now? We are here with you.</p>
+                        <div class="mood-options">
+                            <button class="mood-btn" onclick="selectMood('Great', '😊')"><span>😊</span>Great</button>
+                            <button class="mood-btn" onclick="selectMood('Calm', '🌿')"><span>🌿</span>Calm</button>
+                            <button class="mood-btn" onclick="selectMood('Okay', '😐')"><span>😐</span>Okay</button>
+                            <button class="mood-btn" onclick="selectMood('Stressed', '😠')"><span>😠</span>Stressed</button>
+                            <button class="mood-btn" onclick="selectMood('Low', '😔')"><span>😔</span>Low</button>
+                        </div>
+                        <div id="mood-status" class="mood-feedback hidden">Mood logged for today!</div>
+                    </div>
+
+                    <!-- Daily Habits Checklist -->
+                    <div class="dash-card habit-card">
+                        <h3>Daily Wellness Habits</h3>
+                        <p class="card-subtitle">Small steps lead to massive transformations.</p>
+                        <div class="habit-list">
+                            <label class="habit-item">
+                                <input type="checkbox" checked onchange="toggleHabit(this)">
+                                <span class="checkmark"></span>
+                                <span>Morning Mindfulness & Meditation 🧘‍♂️</span>
+                            </label>
+                            <label class="habit-item">
+                                <input type="checkbox" checked onchange="toggleHabit(this)">
+                                <span class="checkmark"></span>
+                                <span>Drink 8 Glasses of Water 💧</span>
+                            </label>
+                            <label class="habit-item">
+                                <input type="checkbox" onchange="toggleHabit(this)">
+                                <span class="checkmark"></span>
+                                <span>15-Minute Outdoor Walk 🚶‍♂️</span>
+                            </label>
+                            <label class="habit-item">
+                                <input type="checkbox" onchange="toggleHabit(this)">
+                                <span class="checkmark"></span>
+                                <span>Evening Journaling 📝</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 2: Journal -->
+            <section id="tab-journal" class="tab-pane">
+                <div class="journal-container">
+                    <div class="dash-card journal-form-card">
+                        <h3>Daily Reflection Recorder</h3>
+                        <p class="card-subtitle">Write down your private thoughts, triggers, and daily wins.</p>
+                        <form onsubmit="saveJournalEntry(event)">
+                            <div class="input-field">
+                                <label for="journal-title">Reflection Title</label>
+                                <input type="text" id="journal-title" placeholder="e.g., Overcoming a tough afternoon craving" required>
+                            </div>
+                            <div class="input-field">
+                                <label>Emotion Tag</label>
+                                <div class="emotion-tags">
+                                    <button type="button" class="tag-btn selected" onclick="selectTag(this)">🌿 Grateful</button>
+                                    <button type="button" class="tag-btn" onclick="selectTag(this)">💪 Empowered</button>
+                                    <button type="button" class="tag-btn" onclick="selectTag(this)">✨ Hopeful</button>
+                                    <button type="button" class="tag-btn" onclick="selectTag(this)">🌦️ Struggling</button>
+                                </div>
+                            </div>
+                            <div class="input-field">
+                                <label for="journal-content">Your Reflection</label>
+                                <textarea id="journal-content" rows="5" placeholder="Write down your thoughts, feelings, cravings, or wins for today..." required></textarea>
+                            </div>
+                            <button type="submit" class="primary-btn compact-btn">Save Reflection</button>
+                        </form>
+                    </div>
+
+                    <div class="dash-card journal-list-card">
+                        <div class="card-header-between">
+                            <h3>Reflection History</h3>
+                            <span class="entry-count-badge" id="journal-count-badge">2 Entries</span>
+                        </div>
+                        
+                        <div class="journal-filter-bar">
+                            <input type="text" id="journal-search-input" placeholder="🔍 Search reflections..." oninput="filterJournalEntries()">
+                        </div>
+
+                        <div id="journal-logs-list" class="logs-list">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 3: Peer Support -->
+            <section id="tab-peersupport" class="tab-pane">
+                <div class="peer-support-layout">
+                    <!-- Left Feed Column -->
+                    <div class="community-container">
+                        <div class="dash-card post-creator">
+                            <h3>Connect with Peer Support Groups</h3>
+                            <p class="card-subtitle">Share encouragement or seek advice anonymously with supportive peers.</p>
+                            <form onsubmit="postCommunityMsg(event)">
+                                <textarea id="community-input" rows="3" placeholder="Share a win, ask for encouragement, or support a fellow peer..." required></textarea>
+                                <button type="submit" class="primary-btn compact-btn">Share Anonymously</button>
+                            </form>
+                        </div>
+
+                        <div class="feed-list" id="feed-list">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Right Schedule & Counselor Column -->
+                    <div class="support-sidebar-col">
+                        <div class="dash-card schedule-card">
+                            <h3>📅 Live Peer Support Circles</h3>
+                            <p class="card-subtitle">Join moderated audio/video group sessions today.</p>
+                            <div class="session-item">
+                                <div class="session-info">
+                                    <span class="session-time">4:00 PM Today</span>
+                                    <strong class="session-title">Evening Mindfulness & Sharing</strong>
+                                    <span class="session-host">Hosted by Sarah M. (Certified Peer Specialist)</span>
+                                </div>
+                                <button class="join-btn" onclick="showToast('Joined group session link!')">Join Room</button>
+                            </div>
+                            <div class="session-item">
+                                <div class="session-info">
+                                    <span class="session-time">7:30 PM Today</span>
+                                    <strong class="session-title">Overcoming Cravings Workshop</strong>
+                                    <span class="session-host">Hosted by Dr. David K.</span>
+                                </div>
+                                <button class="join-btn secondary" onclick="showToast('Set reminder for 7:30 PM!')">Remind Me</button>
+                            </div>
+                        </div>
+
+                        <div class="dash-card book-counselor-card">
+                            <h3>👨‍⚕️ Request 1-on-1 Counselors</h3>
+                            <p class="card-subtitle">Book a confidential session with recovery specialists.</p>
+                            <form onsubmit="bookCounselorAppt(event)">
+                                <div class="input-field">
+                                    <label>Select Specialist</label>
+                                    <select id="counselor-select" required>
+                                        <option value="Dr. Emily Vance (Addiction Specialist)">Dr. Emily Vance (Addiction Specialist)</option>
+                                        <option value="Marcus Ray (Certified Recovery Coach)">Marcus Ray (Certified Recovery Coach)</option>
+                                    </select>
+                                </div>
+                                <div class="input-field">
+                                    <label>Preferred Date & Time</label>
+                                    <input type="datetime-local" id="appt-time" required>
+                                </div>
+                                <button type="submit" class="primary-btn compact-btn">Confirm Booking</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 4: Resources & FAQs -->
+            <section id="tab-resources" class="tab-pane">
+                <div class="resources-wrapper">
+                    <!-- Search Bar -->
+                    <div class="resource-search-box">
+                        <input type="text" id="resource-search" placeholder="🔍 Search recovery articles, coping tools, FAQs..." oninput="filterResources()">
+                    </div>
+
+                    <!-- Embedded Videos Grid -->
+                    <div class="video-section-header">
+                        <h3>🎥 Embedded Instructional Videos</h3>
+                        <p class="card-subtitle font-sm">Learn mindfulness, breathing, and stress management practices directly on JAYFOUND.</p>
+                    </div>
+                    <div class="videos-grid" id="videos-grid-list">
+                        <!-- Populated dynamically via DB -->
+                    </div>
+
+                    <!-- Hotlines Grid -->
+                    <div class="resources-grid">
+                        <div class="dash-card resource-card emergency">
+                            <div class="res-icon">🆘</div>
+                            <h3>National Helpline (SAMHSA)</h3>
+                            <p>Free, confidential, 24/7 treatment referral and information service.</p>
+                            <a href="tel:18006624357" class="res-action-btn">Call 1-800-662-4357</a>
+                        </div>
+
+                        <div class="dash-card resource-card">
+                            <div class="res-icon">💬</div>
+                            <h3>Crisis Text Line</h3>
+                            <p>Free, 24/7 support via text message with trained crisis counselors.</p>
+                            <button class="res-secondary-btn" onclick="showToast('Text HOME to 741741 for instant text support.')">Text HOME to 741741</button>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Accordion -->
+                    <div class="dash-card faq-card">
+                        <h3>Frequently Asked Questions & Recovery Guides</h3>
+                        <div class="faq-accordion" id="faq-accordion">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 5: Profile & Settings -->
+            <section id="tab-profile" class="tab-pane">
+                <div class="profile-container">
+                    <div class="dash-card profile-card">
+                        <h3>Profile & Recovery Preferences</h3>
+                        <form onsubmit="saveProfileSettings(event)">
+                            <div class="profile-header-edit">
+                                <div class="big-avatar" id="profile-avatar-display">F</div>
+                                <div>
+                                    <h4 id="profile-full-name">Faraz H.</h4>
+                                    <span class="profile-email-lbl" id="profile-email-display">farazhaidet786@gmail.com</span>
+                                </div>
+                            </div>
+
+                            <div class="input-field">
+                                <label>Profile Picture</label>
+                                <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 12px;">
+                                    <button type="button" class="primary-btn compact-btn" onclick="document.getElementById('prof-avatar-upload').click()">Upload Photo</button>
+                                    <input type="file" id="prof-avatar-upload" accept="image/*" style="display:none;" onchange="handleProfilePictureUpload(this)">
+                                    <span id="prof-upload-status" style="font-size:12px; color:var(--text-body);">No file uploaded</span>
+                                </div>
+                            </div>
+
+                            <div class="input-field">
+                                <label for="prof-display-name">Display Pseudonym</label>
+                                <input type="text" id="prof-display-name" value="Faraz H." required>
+                            </div>
+
+                            <div class="input-field">
+                                <label for="prof-streak-target">Streak Target (Days)</label>
+                                <input type="number" id="prof-streak-target" value="60" required>
+                            </div>
+
+                            <div class="toggle-group">
+                                <label class="switch-label">
+                                    <span>Enable Daily Motivational Notifications</span>
+                                    <input type="checkbox" checked id="prof-notif-toggle">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+
+                            <button type="submit" class="primary-btn compact-btn" style="margin-top: 16px;">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 6: Admin Dashboard Portal -->
+            <section id="tab-admin" class="tab-pane">
+                <div class="admin-container">
+                    <!-- Platform Metrics -->
+                    <div class="dash-card admin-stats-card">
+                        <h3>🛡️ Admin Oversight & Platform Statistics</h3>
+                        <div class="admin-stats-grid">
+                            <div class="astat-box">
+                                <span class="astat-num" id="admin-user-count">1,240</span>
+                                <span class="astat-lbl">Active Users</span>
+                            </div>
+                            <div class="astat-box">
+                                <span class="astat-num" id="admin-ticket-count">0</span>
+                                <span class="astat-lbl">Pending Support Requests</span>
+                            </div>
+                            <div class="astat-box">
+                                <span class="astat-num">99.9%</span>
+                                <span class="astat-lbl">Uptime Health</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Support Requests Inbox -->
+                    <div class="dash-card admin-tickets-card">
+                        <h3>📥 Confidential Support Intake Requests</h3>
+                        <p class="card-subtitle">Review, assign, and manage incoming support request workflows.</p>
+                        <div class="tickets-list" id="admin-tickets-list">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Registered Users Directory -->
+                    <div class="dash-card">
+                        <h3>👥 Registered User Directory</h3>
+                        <p class="card-subtitle">Manage registered accounts and adjust suspension status.</p>
+                        <div style="overflow-x:auto;">
+                            <table style="width:100%; border-collapse:collapse; font-size:13px; text-align:left;">
+                                <thead>
+                                    <tr style="border-bottom:1.5px solid var(--border-light); height:40px; color:var(--text-label);">
+                                        <th style="padding:8px;">Name</th>
+                                        <th style="padding:8px;">Email / Phone</th>
+                                        <th style="padding:8px;">Joined Date</th>
+                                        <th style="padding:8px;">Status</th>
+                                        <th style="padding:8px; text-align:right;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-users-list">
+                                    <!-- Populated dynamically from Firestore -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Abuse Reports Section -->
+                    <div class="dash-card">
+                        <h3>🚨 Received Abuse Reports</h3>
+                        <p class="card-subtitle">Review peer-submitted complaints and take action.</p>
+                        <div style="overflow-x:auto;">
+                            <table style="width:100%; border-collapse:collapse; font-size:13px; text-align:left;">
+                                <thead>
+                                    <tr style="border-bottom:1.5px solid var(--border-light); height:40px; color:var(--text-label);">
+                                        <th style="padding:8px;">Reported User</th>
+                                        <th style="padding:8px;">Reporter</th>
+                                        <th style="padding:8px;">Reason</th>
+                                        <th style="padding:8px;">Timestamp</th>
+                                        <th style="padding:8px;">Status</th>
+                                        <th style="padding:8px; text-align:right;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-reports-list">
+                                    <!-- Populated dynamically from Firestore -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- CMS Sections -->
+                    <div class="admin-cms-sections">
+                        <div class="dash-card admin-cms-card">
+                            <h3>➕ Dynamic FAQ Publisher</h3>
+                            <p class="card-subtitle">Publish new FAQs instantly for JAYFOUND users.</p>
+                            <form onsubmit="adminAddFaq(event)">
+                                <div class="input-field">
+                                    <label for="cms-faq-q">Question Text</label>
+                                    <input type="text" id="cms-faq-q" placeholder="e.g., What are stress management techniques?" required>
+                                </div>
+                                <div class="input-field">
+                                    <label for="cms-faq-a">Answer Guide</label>
+                                    <textarea id="cms-faq-a" rows="3" placeholder="Write the helpful coping answer..." required></textarea>
+                                </div>
+                                <button type="submit" class="primary-btn compact-btn">Publish FAQ</button>
+                            </form>
+                        </div>
+
+                        <div class="dash-card admin-cms-card">
+                            <h3>➕ Video Resources Publisher</h3>
+                            <p class="card-subtitle">Embed new breathing, yoga, or coaching tutorials.</p>
+                            <form onsubmit="adminAddVideo(event)">
+                                <div class="input-field">
+                                    <label for="cms-vid-title">Video Title</label>
+                                    <input type="text" id="cms-vid-title" placeholder="e.g., 5-Minute Box Breathing Tutorial" required>
+                                </div>
+                                <div class="input-field">
+                                    <label for="cms-vid-desc">Short Description</label>
+                                    <input type="text" id="cms-vid-desc" placeholder="A brief explanation of recovery benefits" required>
+                                </div>
+                                <button type="submit" class="primary-btn compact-btn">Publish Video</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Mobile Navigation Footer Bar -->
+        <nav class="mobile-nav-bar">
+            <button class="mobile-nav-btn active" data-tab="overview" onclick="switchTab('overview')">
+                <span>📊</span><span>Overview</span>
+            </button>
+            <button class="mobile-nav-btn" data-tab="journal" onclick="switchTab('journal')">
+                <span>📖</span><span>Journal</span>
+            </button>
+            <button class="mobile-nav-btn" data-tab="peersupport" onclick="switchTab('peersupport')">
+                <span>🤝</span><span>Support</span>
+            </button>
+            <button class="mobile-nav-btn" data-tab="resources" onclick="switchTab('resources')">
+                <span>🆘</span><span>Help</span>
+            </button>
+            <button class="mobile-nav-btn" data-tab="profile" onclick="switchTab('profile')">
+                <span>⚙️</span><span>Profile</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- Confidential Support Request Modal -->
+    <div id="support-request-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>📝 Confidential Support Intake Form</h3>
+                <button class="modal-close" onclick="closeConfidentialSupportModal()">&times;</button>
+            </div>
+            <p class="modal-sub">We are here to support you. Please complete this confidential request to be matched with a support representative.</p>
+            <form onsubmit="handleSupportRequestSubmit(event)">
+                <div class="input-field">
+                    <label for="sup-pref-name">Preferred Name</label>
+                    <input type="text" id="sup-pref-name" placeholder="e.g., Faraz" required>
+                </div>
+                <div class="input-field">
+                    <label for="sup-reason">Reason Seeking Support</label>
+                    <textarea id="sup-reason" rows="2" placeholder="Briefly describe triggers or counseling needs..." required></textarea>
+                </div>
+                <div class="form-row-flex">
+                    <div class="input-field flex-1">
+                        <label for="sup-urgency">Urgency Level</label>
+                        <select id="sup-urgency" required>
+                            <option value="Low">Low - Checking in</option>
+                            <option value="Medium">Medium - Feeling triggers</option>
+                            <option value="High">High - Urgent Support Required</option>
+                        </select>
+                    </div>
+                    <div class="input-field flex-1">
+                        <label for="sup-gender">Preferred Staff</label>
+                        <select id="sup-gender" required>
+                            <option value="No Preference">No Preference</option>
+                            <option value="Male">Male Representative</option>
+                            <option value="Female">Female Representative</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-field">
+                    <label for="sup-method">Preferred Contact Method</label>
+                    <select id="sup-method" onchange="toggleSupportDateFields(this)" required>
+                        <option value="Live Chat">Live Chat Session</option>
+                        <option value="Phone Call">Phone Call Callback</option>
+                        <option value="Email">Email Communication</option>
+                        <option value="Scheduled Appointment">Scheduled Appointment</option>
+                    </select>
+                </div>
+                <div class="input-field hidden" id="support-date-field-group">
+                    <label for="sup-date-time">Preferred Appointment Date & Time</label>
+                    <input type="datetime-local" id="sup-date-time">
+                </div>
+                <button type="submit" class="primary-btn">Submit Confidential Request</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Emergency Immediate Help Modal -->
+    <div id="emergency-modal" class="modal-overlay hidden">
+        <div class="modal-card emergency-modal-card">
+            <div class="modal-header">
+                <h3>🚨 Need Immediate Crisis Help?</h3>
+                <button class="modal-close" onclick="closeEmergencyModal()">&times;</button>
+            </div>
+            <p class="modal-sub">Free, confidential 24/7 crisis helplines are available instantly:</p>
+            <div class="emergency-actions-list">
+                <a href="tel:18006624357" class="emergency-call-link">📞 Call SAMHSA Helpline (1-800-662-4357)</a>
+                <a href="sms:741741?body=HOME" class="emergency-text-link">💬 Text HOME to 741741 (Crisis Text Line)</a>
+                <button class="emergency-grounding-link" onclick="closeEmergencyModal(); switchTab('resources');">🫁 Open Grounding & Breathing Guide</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Embedded Video Player Modal -->
+    <div id="video-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="video-modal-title">Guided Exercise</h3>
+                <button class="modal-close" onclick="closeVideoModal()">&times;</button>
+            </div>
+            <div class="video-placeholder">
+                <div class="play-circle">▶</div>
+                <p id="video-modal-desc">Playing video content...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Phone Verification Modal Flow -->
+    <div id="phone-auth-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>📞 Phone Verification Portal</h3>
+                <button class="modal-close" onclick="closePhoneAuthModal()">&times;</button>
+            </div>
+            <p class="modal-sub">Register securely using your mobile phone number.</p>
+            
+            <form onsubmit="handlePhoneVerifySubmit(event)" id="phone-step-1-form">
+                <div class="input-field">
+                    <label for="auth-phone-num">Mobile Number (with country code)</label>
+                    <input type="tel" id="auth-phone-num" placeholder="e.g., +15551234567" required>
+                    <span class="validation-error" id="val-err-phone"></span>
+                </div>
+                <!-- Firebase invisible reCAPTCHA container -->
+                <div id="recaptcha-container" style="margin-top: 10px;"></div>
+                <button type="submit" class="primary-btn" id="phone-submit-btn" style="margin-top: 10px;">Send SMS OTP</button>
+            </form>
+
+            <form onsubmit="handleCodeConfirmSubmit(event)" id="phone-step-2-form" class="hidden">
+                <div class="input-field">
+                    <label for="auth-phone-otp">6-Digit Confirmation Code</label>
+                    <input type="text" id="auth-phone-otp" placeholder="e.g., 123456" required minlength="6" maxlength="6">
+                    <span class="validation-error" id="val-err-otp"></span>
+                </div>
+                <p class="modal-sub" style="font-size:12.5px; color:#4f39f6;" id="phone-sending-status">SMS OTP sent successfully!</p>
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                    <button type="submit" class="primary-btn" style="flex: 2; margin-top:0;">Verify & Sign In</button>
+                    <button type="button" class="primary-btn" id="phone-resend-btn" style="flex: 1.2; margin-top:0; background: #e2e8f0; color: #4b5563; box-shadow: none;" onclick="handlePhoneResend()">Resend</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Google Account Select Modal -->
+    <div id="google-auth-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Select Google Account</h3>
+                <button class="modal-close" onclick="closeGoogleAuthModal()">&times;</button>
+            </div>
+            <p class="modal-sub">Choose a verified Google profile to continue to JAYFOUND</p>
+            <div class="counselor-options">
+                <button class="counselor-opt-btn" onclick="selectGoogleAccount('farazhaidet786@gmail.com')">
+                    <span class="opt-icon">👤</span>
+                    <div>
+                        <strong>Faraz Haidet</strong>
+                        <span>farazhaidet786@gmail.com</span>
+                    </div>
+                </button>
+                <button class="counselor-opt-btn" onclick="selectGoogleAccount('johndoe.recovery@gmail.com')">
+                    <span class="opt-icon">👤</span>
+                    <div>
+                        <strong>John Doe</strong>
+                        <span>johndoe.recovery@gmail.com</span>
+                    </div>
+                </button>
+                <button class="counselor-opt-btn" onclick="triggerCustomGoogleEmail()">
+                    <span class="opt-icon">➕</span>
+                    <div>
+                        <strong>Use another account</strong>
+                        <span>Register with a different Google account</span>
+                    </div>
+                </button>
+            </div>
+            <div id="custom-google-input-group" class="input-field hidden" style="margin-top:16px;">
+                <label for="custom-google-email">Enter Google Email</label>
+                <div class="password-box">
+                    <input type="email" id="custom-google-email" placeholder="example@gmail.com">
+                    <button class="primary-btn compact-btn" onclick="submitCustomGoogleEmail()" style="margin-left:8px; height:44px;">Select</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Facebook Login Credentials Modal -->
+    <div id="facebook-auth-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Log in with Facebook</h3>
+                <button class="modal-close" onclick="closeFacebookAuthModal()">&times;</button>
+            </div>
+            <p class="modal-sub">Access JAYFOUND using your Facebook account</p>
+            <form onsubmit="handleFacebookSubmit(event)">
+                <div class="input-field">
+                    <label for="fb-identity">Email or Mobile Number</label>
+                    <input type="text" id="fb-identity" placeholder="Facebook username/email" required>
+                </div>
+                <div class="input-field">
+                    <label for="fb-pass">Password</label>
+                    <input type="password" id="fb-pass" placeholder="Facebook password" required>
+                </div>
+                <button type="submit" class="primary-btn" style="background:#1877F2; box-shadow:0 8px 18px rgba(24,119,242,0.3)">Log In</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Floating AI Support Assistant Widget -->
+    <div id="ai-chat-btn" class="ai-floating-trigger" onclick="toggleAiWidget()">
+        <span class="ai-avatar-icon">🤖</span>
+        <span class="ai-btn-text">AI Recovery Support</span>
+    </div>
+
+    <div id="ai-chat-widget" class="ai-widget-card hidden">
+        <div class="ai-widget-header">
+            <div class="ai-avatar-flex">
+                <span class="ai-avatar-badge">🤖</span>
+                <div>
+                    <h4>AI Support Assistant</h4>
+                    <span class="ai-active-status">Active Helper</span>
+                </div>
+            </div>
+            <button class="ai-close-btn" onclick="toggleAiWidget()">&times;</button>
+        </div>
+        <div class="ai-messages-list" id="ai-messages-list">
+            <div class="ai-msg bot">
+                Hello! I am your AI Recovery Support Assistant. I am here to offer coping exercises, recovery concepts, or breathing practices. How can I support your journey today?
+            </div>
+        </div>
+        <div class="ai-widget-footer">
+            <form onsubmit="handleAiMessageSubmit(event)">
+                <input type="text" id="ai-user-input" placeholder="Type your recovery question here..." required>
+                <button type="submit" class="ai-send-btn">➔</button>
+            </form>
+            <div class="ai-disclaimer">complements, not replaces, professional medical care.</div>
+        </div>
+    </div>
+
+    <!-- Report Abuse Modal -->
+    <div id="report-user-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>⚠️ Report User Abuse</h3>
+                <button class="modal-close" onclick="closeReportUserModal()">&times;</button>
+            </div>
+            <p class="modal-sub">Submit a confidential report regarding this user. Administrators will review this report immediately.</p>
+            <form onsubmit="handleReportUserSubmit(event)">
+                <input type="hidden" id="report-target-uid">
+                <div class="input-field">
+                    <label>Reported User Name</label>
+                    <input type="text" id="report-target-name" readonly style="background:#f1f5f9; color:#475569; font-weight:600;">
+                </div>
+                <div class="input-field">
+                    <label for="report-reason">Reason for Report</label>
+                    <textarea id="report-reason" rows="3" placeholder="Provide details of abuse, inappropriate behavior, or rule violations..." required></textarea>
+                </div>
+                <button type="submit" class="primary-btn" style="background:#dc2626; box-shadow:0 8px 16px rgba(220,38,38,0.2); margin-top:10px;">Submit Abuse Report</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
     <div id="toast" class="toast hidden"></div>
+
+    <!-- Firebase SDK (v10 Compat) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
 
     <script src="app.js"></script>
 </body>

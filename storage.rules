@@ -1,0 +1,33 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && 
+        firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.isAdmin == true;
+    }
+
+    // User Profile Pictures directory
+    match /users/{userId}/{allPaths=**} {
+      // Authenticated users can view other users' avatars in support feeds
+      allow read: if isAuthenticated();
+      // Only the user themselves can upload or delete their avatar
+      allow write: if isOwner(userId);
+    }
+
+    // Public Product/Marketing images
+    match /products/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}
